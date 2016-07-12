@@ -1,49 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmack <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/11 07:11:01 by tmack             #+#    #+#             */
-/*   Updated: 2016/07/12 08:58:50 by tmack            ###   ########.fr       */
+/*   Created: 2016/07/12 08:38:17 by tmack             #+#    #+#             */
+/*   Updated: 2016/07/12 09:42:49 by tmack            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 
-int ft_abs(int nbr)
+int	ft_abs(int nbr)
 {
 	return ((nbr < 0) ? -nbr : nbr);
-}
+	}
 
-int	ft_len(int nbr)
+int	len2(int nbr)
 {
-	int		len;
-	int		absnbr;
+	int len1;
+	int absnbr;
 
 	absnbr = ft_abs(nbr);
-	len = (nbr <= 0) ? 1 : 0;
+	len1 = (nbr <= 0) ? 1 : 0;
 	while (absnbr > 0)
 	{
 		absnbr = absnbr / 10;
-		len++;
+		len1++;
 	}
-	return (len);
+	return (len1);
 }
 
-char	*ft_itoa(int nbr)
+char *ft_itoa(int nbr)
 {
-	char	*c;
-	int		absnbr;
-	int		len;
-	int		sign;
+	int absnbr;
+	int len;
+	char *c;
+	int sign;
 
-	absnbr = ft_abs(nbr);
-	len = ft_len(nbr);
-	c = (char *)malloc(sizeof(char) * len);
 	sign = (nbr < 0) ? 1 : 0;
+	len = len2(nbr);
+	absnbr = ft_abs(nbr);
+	c = (char *)malloc(sizeof(char) * len);
 	len--;
 	while (len >= 0)
 	{
@@ -51,8 +50,27 @@ char	*ft_itoa(int nbr)
 		absnbr = absnbr / 10;
 		len--;
 	}
-
 	if (sign == 1)
 		c[0] = '-';
 	return (c);
+}
+
+int	ft_atoi(char *c)
+{
+	int nbr;
+	int sign;
+	int i;
+
+	i = 0;
+	nbr = 0;
+	sign = 
+}
+#include <stdio.h>
+int main()
+{
+	int i;
+	char *c;
+	i = 0;
+	c = ft_itoa(i);
+	printf("%s\n", c);
 }

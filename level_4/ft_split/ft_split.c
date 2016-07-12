@@ -6,18 +6,18 @@
 /*   By: tmack <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 08:09:58 by tmack             #+#    #+#             */
-/*   Updated: 2016/07/11 08:36:48 by tmack            ###   ########.fr       */
+/*   Updated: 2016/07/12 09:50:07 by tmack            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_minishell.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int		count_words(char *str)
 {
 	int		count;
 	int		check;
 
-	i = 0;
 	count = 0;
 	while (*str)
 	{
@@ -55,11 +55,11 @@ void	fill_word(char *str, char **tab_str)
 	i = 0;
 	while (*str && *str != ' ' && *str != '\t')
 	{
-		(*str_tab)[i] = *str;
+		(*tab_str)[i] = *str;
 		str++;
 		i++;
 	}
-	(*str_tab)[i] = '\0';
+	(*tab_str)[i] = '\0';
 }
 
 void	skip_space_tab(char **str)
@@ -81,17 +81,32 @@ char	**ft_split(char *str)
 	int		i;
 
 	i = 0;
-	len = count_word(str);
+	len = count_words(str);
 	tab = (char **)malloc(sizeof(char *) * (len + 1));
 	tab[len] = NULL;
 	skip_space_tab(&str);
 	while (*str)
 	{
-		tab[i] = (char *)malloc(sizeof(char) * (len_word(str) + 1));
-		fill_word_tab(str, &tab[i]);
+		tab[i] = (char *)malloc(sizeof(char) * (word_len(str) + 1));
+		fill_word(str, &tab[i]);
 		skip_word(&str);
 		skip_space_tab(&str);
 		i++;
 	}
 	return (tab);
+}
+
+int main()
+{
+	char **str;
+	char *line;
+	int i;
+
+	i = 0;
+	line = "hello world";
+	str = ft_split(line);
+	while (str[i])
+	{
+		printf("%s\n", str[i++]);
+	}
 }
