@@ -1,58 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmack <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/11 07:11:01 by tmack             #+#    #+#             */
-/*   Updated: 2016/07/12 08:58:50 by tmack            ###   ########.fr       */
+/*   Created: 2016/07/18 09:06:09 by tmack             #+#    #+#             */
+/*   Updated: 2016/07/19 17:16:05 by tmack            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 
-int ft_abs(int nbr)
+long int		ft_abs(long int nbr)
 {
 	return ((nbr < 0) ? -nbr : nbr);
 }
 
-int	ft_len(int nbr)
+int				ft_len(long int nbr)
 {
 	int		len;
-	int		absnbr;
 
-	absnbr = ft_abs(nbr);
 	len = (nbr <= 0) ? 1 : 0;
-	while (absnbr > 0)
+	while (nbr != 0)
 	{
-		absnbr = absnbr / 10;
+		nbr = nbr / 10;
 		len++;
 	}
 	return (len);
 }
 
-char	*ft_itoa(int nbr)
+char			*ft_itoa(int nbr)
 {
-	char	*c;
-	int		absnbr;
-	int		len;
-	int		sign;
+	int			len;
+	int			absnbr;
+	int			sign;
+	char		*c;
+	long int	temp;
 
-	absnbr = ft_abs(nbr);
+	temp = nbr;
+	sign = (nbr < 0) ? -1 : 1;
 	len = ft_len(nbr);
-	c = (char *)malloc(sizeof(char) * len);
-	sign = (nbr < 0) ? 1 : 0;
+	absnbr = ft_abs(nbr);
+	c = (char *)malloc(sizeof(char) * len + 1);
+	c[len] = '\0';
 	len--;
 	while (len >= 0)
 	{
-		c[len] = '0' + absnbr % 10;
-		absnbr = absnbr / 10;
+		c[len] = '0' + ft_abs(temp % 10);
+		temp = ft_abs(temp / 10);
 		len--;
 	}
-
-	if (sign == 1)
+	if (sign == -1)
 		c[0] = '-';
 	return (c);
 }
