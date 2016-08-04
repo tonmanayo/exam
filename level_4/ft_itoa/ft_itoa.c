@@ -6,11 +6,12 @@
 /*   By: tmack <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/18 09:06:09 by tmack             #+#    #+#             */
-/*   Updated: 2016/07/19 17:16:05 by tmack            ###   ########.fr       */
+/*   Updated: 2016/08/04 09:20:14 by tmack            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <stdio.h>
 
 long int		ft_abs(long int nbr)
 {
@@ -33,25 +34,32 @@ int				ft_len(long int nbr)
 char			*ft_itoa(int nbr)
 {
 	int			len;
-	int			absnbr;
 	int			sign;
 	char		*c;
-	long int	temp;
 
-	temp = nbr;
 	sign = (nbr < 0) ? -1 : 1;
 	len = ft_len(nbr);
-	absnbr = ft_abs(nbr);
 	c = (char *)malloc(sizeof(char) * len + 1);
 	c[len] = '\0';
 	len--;
 	while (len >= 0)
 	{
-		c[len] = '0' + ft_abs(temp % 10);
-		temp = ft_abs(temp / 10);
+		c[len] = '0' + ft_abs(nbr % 10);
+		nbr = ft_abs(nbr / 10);
 		len--;
 	}
 	if (sign == -1)
 		c[0] = '-';
 	return (c);
+}
+
+int main(int argc, char **argv)
+{
+	char    *c;
+	long int        nbr;
+
+	if (argc != 2)
+		return(0);
+	nbr = atoi(argv[1]);
+	printf("%s\n", ft_itoa(nbr));
 }
