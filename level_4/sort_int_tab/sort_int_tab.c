@@ -1,50 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fprime.c                                           :+:      :+:    :+:   */
+/*   sort_int_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmack <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/12 11:04:54 by tmack             #+#    #+#             */
-/*   Updated: 2016/08/01 15:01:09 by tmack            ###   ########.fr       */
+/*   Created: 2016/07/27 07:52:56 by tmack             #+#    #+#             */
+/*   Updated: 2016/08/02 07:21:34 by tmack            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-
-int		main(int argc, char **argv)
+void	sort_int_tab(int *tab, unsigned int size)
 {
-	int		i;
-	int		nbr;
+	unsigned int	i;
+	int				swap;
 
-	if (argc != 2)
+	i = 0;
+	while (i < size - 1)
 	{
-		printf("\n");
-		return (0);
-	}
-	nbr= atoi(argv[1]);
-	if (nbr == 1)
-	{
-		printf("1\n");
-		return (0);
-	}
-	while (1)
-	{
-		i = 1;
-		while (++i <= nbr)
-		{
-			if (nbr % i == 0)
-			{
-				printf("%d", i);
-				nbr = nbr / i;
-				break ;
-			}
-		}
-		if (nbr == 1)
-			break ;
+		if (tab[i] <= tab[i + 1])
+			i++;
 		else
-			printf("*");
+		{
+			swap = tab[i];
+			tab[i] = tab[i + 1];
+			tab[i + 1] = swap;
+			i = 0;
+		}
 	}
-	printf("\n");
 }

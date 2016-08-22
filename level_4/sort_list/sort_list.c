@@ -1,50 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fprime.c                                           :+:      :+:    :+:   */
+/*   sort_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmack <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/12 11:04:54 by tmack             #+#    #+#             */
-/*   Updated: 2016/08/01 15:01:09 by tmack            ###   ########.fr       */
+/*   Created: 2016/07/25 09:59:41 by tmack             #+#    #+#             */
+/*   Updated: 2016/07/25 10:05:51 by tmack            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "list.h"
+#include <unistd.h>
 
-int		main(int argc, char **argv)
+t_list	*sort_list(t_list* lst, int (*cmp)(int, int))
 {
-	int		i;
-	int		nbr;
+	int		new;
+	t_list	*tmp;
 
-	if (argc != 2)
+	tmp = lst;
+	while (lst->next != NULL)
 	{
-		printf("\n");
-		return (0);
-	}
-	nbr= atoi(argv[1]);
-	if (nbr == 1)
-	{
-		printf("1\n");
-		return (0);
-	}
-	while (1)
-	{
-		i = 1;
-		while (++i <= nbr)
+		if (((*cmp)(lst->data, lst->next->data)) == 0)
 		{
-			if (nbr % i == 0)
-			{
-				printf("%d", i);
-				nbr = nbr / i;
-				break ;
-			}
+			new = lst->data;
+			lst->data = lst->next->data;
+			lst->next->data = overflow;
+			lst = tmp;
 		}
-		if (nbr == 1)
-			break ;
 		else
-			printf("*");
+			lst = lst->next;
 	}
-	printf("\n");
+	lst = tmp;
+	return (lst);
 }

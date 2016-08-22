@@ -5,108 +5,105 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmack <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/11 08:09:58 by tmack             #+#    #+#             */
-/*   Updated: 2016/07/20 07:58:48 by tmack            ###   ########.fr       */
+/*   Created: 2016/08/02 07:30:16 by tmack             #+#    #+#             */
+/*   Updated: 2016/08/02 08:26:59 by tmack            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 
-int		count_words(char *str)
-{
-	int		count;
-	int		check;
-
-	count = 0;
-	while (*str)
-	{
-		check = 0;
-		while (*str == ' ' || *str == '\t')
-			str++;
-		while (*str && *str != ' ' && *str != '\t')
-		{
-			str++;
-			check = 1;
-		}
-		if (check)
-			count++;
-	}
-	return (count);
-}
-
-int		word_len(char *str)
+int		nbr_words(char	*str)
 {
 	int		len;
+	int		check;
+	int		i;
 
-	len = 0;
-	while (*str && *str != ' ' && *str != '\t')
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	if (str[i - 1] == ' ')
+		len = -1;
+	else
+		len = 0;
+	
+	i = 0;
+	while (str && str[i])
 	{
-		len++;
-		str++;
+		check = 0;
+		while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' ||
+				str[i] == '\0')
+			i++;
+		while (str[i] != ' ' && str[i] != '\t' && str[i] != '\0' &&
+				str[i] != '\n')
+		{
+			i++;
+			check = 1;
+		}
+		if (check == 1)
+			len++;
 	}
 	return (len);
 }
 
-void	fill_word(char *str, char **tab_str)
+int		skip_space(char *str, int i)
 {
-	int		i;
-
-	i = 0;
-	while (*str && *str != ' ' && *str != '\t')
-	{
-		(*tab_str)[i] = *str;
-		str++;
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' ||
+			str[i] == '\0')
 		i++;
-	}
-	(*tab_str)[i] = '\0';
+	return (i);
 }
 
-void	skip_space_tab(char **str)
+char    **ft_split(char *str)
 {
-	while (**str == ' ' || **str == '\t')
-		(*str)++;
-}
-
-void	skip_word(char **str)
-{
-	while (**str && **str != ' ' && **str != '\t')
-		(*str)++;
-}
-
-char	**ft_split(char *str)
-{
+	int count;
 	char	**tab;
-	int		len;
 	int		i;
+	int		j;
+	int		k;
+	int		len;
 
+	len = nbr_words(str);
 	i = 0;
-	len = count_words(str);
+	k = 0;
 	tab = (char **)malloc(sizeof(char *) * (len + 1));
-	tab[len] = NULL;
-	skip_space_tab(&str);
-	while (*str)
+	while (str[i] && k < len)
 	{
-		tab[i] = (char *)malloc(sizeof(char) * (word_len(str) + 1));
-		fill_word(str, &tab[i]);
-		skip_word(&str);
-		skip_space_tab(&str);
-		i++;
+		count = 0;
+		i = skip_space(str, i);
+		while (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != '\0' &&
+				str[i] != '\n')
+		{
+			count++;
+			i++;
+		}
+		i = i - count;
+		tab[k] = (char *)malloc(sizeof(char) * (count + 1));
+		j = 0;
+		while (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != '\0' &&
+				str[i] != '\n')
+		{
+			tab[k][j] = str[i];
+			j++;
+			i++;
+		}
+		tab[k][j] = '\0';
+		k++;
 	}
+	tab[k] = 0;
 	return (tab);
 }
-
-int main()
+#include <stdio.h>
+int main(int argc, char **argv)
 {
-	char **str;
-	char *line;
-	int i;
+	char **new;
+	int		i;
 
 	i = 0;
-	line = "hello world";
-	str = ft_split(line);
-	while (str[i])
+	new  = ft_split(argv[1]);
+	while (new[i] != '\0')
 	{
-		printf("%s\n", str[i++]);
+		printf("%s\n", new[i]);
+			i++;
 	}
+
 }
